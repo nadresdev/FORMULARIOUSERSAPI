@@ -57,7 +57,7 @@ namespace FORMULARIOAPI.Controllers
                 RefreshToken = newRefreshToken
             });
         }
-
+/*
         [HttpPost("registroB")]
         public async Task<IActionResult> AddUser([FromBody] User userObj)
         {
@@ -87,21 +87,28 @@ namespace FORMULARIOAPI.Controllers
                 Message = "Usuario agregado!"
             });
         }
-
+*/
         [HttpPost("registro")]
         public async Task<IActionResult> AddUserB([FromBody] LoginDTO userObj)
         {
 
+
+            Personas persona = new Personas();
             User user = new User();
-            user.Nombre = userObj.Nombre;
-            user.Email = userObj.Email;
+            persona.Nombres = userObj.Nombre;
+            persona.Email = userObj.Email;
             user.Username = userObj.Username;  
             user.Password = userObj.Password;
-            user.Role = userObj.Role;
+            persona.Role = userObj.Role;
             user.Token = userObj.Token;
-            user.Apellidos= userObj.Apellidos;
-            user.RefreshToken = userObj.RefreshToken;
             
+            persona.Apellidos= userObj.Apellidos;
+            user.RefreshToken = userObj.RefreshToken;
+            persona.NroIdentificacion = userObj.NroIdentificacion;
+            persona.TipoIdentificacion = userObj.TipoIdentificacion;
+            persona.NombresApellidos = userObj.Nombre + " " + userObj.Apellidos;
+            persona.IdentificacionConcatenada = userObj.TipoIdentificacion + " " + userObj.NroIdentificacion;
+
             if (userObj == null)
                 return BadRequest();
 
@@ -118,9 +125,11 @@ namespace FORMULARIOAPI.Controllers
                 return BadRequest(new { Message = passMessage.ToString() });
 
             user.Password = PasswordHasher.HashPassword(user.Password);
-            user.Role = "User";
+            persona.Role = "User";
             user.Token = "";
             await _authContext.AddAsync(user);
+            await _authContext.SaveChangesAsync();
+            await _authContext.AddAsync(persona);
             await _authContext.SaveChangesAsync();
             return Ok(new
             {
@@ -131,10 +140,10 @@ namespace FORMULARIOAPI.Controllers
 
 
         private Task<bool> CheckEmailExistAsync(string? email)
-            => _authContext.Users.AnyAsync(x => x.Email == email);
+            => _authContext.Personas.AnyAsync(x => x.Email == email);
 
         private Task<bool> CheckUsernameExistAsync(string? username)
-            => _authContext.Users.AnyAsync(x => x.Email == username);
+            => _authContext.Users.AnyAsync(x => x.Username == username);
 
         private static string CheckPasswordStrength(string pass)
         {
@@ -154,7 +163,7 @@ namespace FORMULARIOAPI.Controllers
             var key = Encoding.ASCII.GetBytes("muymuymuysecreta....yut");
             var identity = new ClaimsIdentity(new Claim[]
             {
-                new Claim(ClaimTypes.Role, user.Role),
+               // new Claim(ClaimTypes.Role, user.Role),
                 new Claim(ClaimTypes.Name,$"{user.Username}")
             });
 
@@ -205,11 +214,18 @@ namespace FORMULARIOAPI.Controllers
 
         }
 
-        [Authorize]
+       /* [Authorize]
         [HttpGet]
-        public async Task<ActionResult<User>> GetAllUsers()
+        public async Task<ActionResult<User>> GetPersonas()
         {
             return Ok(await _authContext.Users.ToListAsync());
+        }
+       */
+        [Authorize]
+        [HttpGet]
+        public async Task<ActionResult<Personas>> GetAllUsers ()
+        {
+            return Ok(await _authContext.Personas.ToListAsync());
         }
 
         [HttpPost("refrescar")]

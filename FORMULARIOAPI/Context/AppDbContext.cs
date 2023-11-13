@@ -10,6 +10,7 @@ namespace FORMULARIOAPI.Context
 
         }
         public DbSet<User> Users { get; set; }
+        public DbSet<Personas> Personas { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
