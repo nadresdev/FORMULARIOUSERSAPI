@@ -2279,11 +2279,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\jerua\\Source\\Repos\\AngularAuthYtAPI\\AngularAuthYtAPI\\AngularAuthYtAPI.csproj",
-      "projectName": "AngularAuthYtAPI",
-      "projectPath": "C:\\Users\\jerua\\Source\\Repos\\AngularAuthYtAPI\\AngularAuthYtAPI\\AngularAuthYtAPI.csproj",
+      "projectUniqueName": "C:\\PROYECTOS\\FORMULARIO_USERS\\FORMULARIOAPI\\FORMULARIOAPI.csproj",
+      "projectName": "FORMULARIOAPI",
+      "projectPath": "C:\\PROYECTOS\\FORMULARIO_USERS\\FORMULARIOAPI\\FORMULARIOAPI.csproj",
       "packagesPath": "C:\\Users\\jerua\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\jerua\\Source\\Repos\\AngularAuthYtAPI\\AngularAuthYtAPI\\obj\\",
+      "outputPath": "C:\\PROYECTOS\\FORMULARIO_USERS\\FORMULARIOAPI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

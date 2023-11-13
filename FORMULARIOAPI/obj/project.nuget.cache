@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "By7JKs/pQ7xQmG0I0zvDlMLu+YGUgsOTO314HfkJyWaRtSffeafaLglc8lmE4quXPNr7RaDZPdhhS1LthIDYNA==",
+  "dgSpecHash": "mPWtcD5DuTYAS06uGmvLpQYvQD1nOw5npsslzObdofz3JKDTWoM29cfjal0inRiT2+/AyeowCipGeaI2LjAa7g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\jerua\\source\\repos\\AngularAuthYtAPI\\AngularAuthYtAPI\\AngularAuthYtAPI.csproj",
+  "projectFilePath": "C:\\PROYECTOS\\FORMULARIO_USERS\\FORMULARIOAPI\\FORMULARIOAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\jerua\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\jerua\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.11\\microsoft.aspnetcore.authentication.jwtbearer.6.0.11.nupkg.sha512",
