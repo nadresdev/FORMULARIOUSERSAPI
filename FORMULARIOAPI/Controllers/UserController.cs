@@ -1,10 +1,7 @@
-﻿using AngularAuthYtAPI.Models;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
 using System.Text;
-using AngularAuthYtAPI.Context;
 using Microsoft.EntityFrameworkCore;
-using AngularAuthYtAPI.Helpers;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System;
@@ -13,9 +10,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Cryptography;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using AngularAuthYtAPI.Models.Dto;
+using FORMULARIOAPI.Context;
+using FORMULARIOAPI.Models;
+using FORMULARIOAPI.Helpers;
+using FORMULARIOAPI.Models.Dto;
 
-namespace AngularAuthYtAPI.Controllers
+namespace FORMULARIOAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -109,7 +109,7 @@ namespace AngularAuthYtAPI.Controllers
         private string CreateJwt(User user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("muymuymuysecretaasdfghytyuio.....");
+            var key = Encoding.ASCII.GetBytes("veryverysceret.....");
             var identity = new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Role, user.Role),
@@ -144,7 +144,7 @@ namespace AngularAuthYtAPI.Controllers
 
         private ClaimsPrincipal GetPrincipleFromExpiredToken(string token)
         {//
-            var key = Encoding.ASCII.GetBytes("muymuymuysecretaasdfghytyuio.....");
+            var key = Encoding.ASCII.GetBytes("veryverysceret.....");
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = false,
@@ -155,12 +155,12 @@ namespace AngularAuthYtAPI.Controllers
             };
             var tokenHandler = new JwtSecurityTokenHandler();
             SecurityToken securityToken;
-            var principal = tokenHandler.ValidateToken(token,tokenValidationParameters, out securityToken);
+            var principal = tokenHandler.ValidateToken(token, tokenValidationParameters, out securityToken);
             var jwtSecurityToken = securityToken as JwtSecurityToken;
             if (jwtSecurityToken == null || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
                 throw new SecurityTokenException("Token invalido");
             return principal;
-                
+
         }
 
         [Authorize]
@@ -171,7 +171,7 @@ namespace AngularAuthYtAPI.Controllers
         }
 
         [HttpPost("refresh")]
-        public async Task<IActionResult> Refresh([FromBody]TokenApiDto tokenApiDto)
+        public async Task<IActionResult> Refresh([FromBody] TokenApiDto tokenApiDto)
         {
             if (tokenApiDto is null)
                 return BadRequest("Error en la petición desde cliente");

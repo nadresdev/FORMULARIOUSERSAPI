@@ -1,4 +1,4 @@
-﻿namespace AngularAuthYtAPI.Models.Dto
+﻿namespace FORMULARIOAPI.Models.Dto
 {
     public class TokenApiDto
     {

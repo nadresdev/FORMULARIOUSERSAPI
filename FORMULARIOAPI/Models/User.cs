@@ -1,4 +1,4 @@
-﻿namespace AngularAuthYtAPI.Models
+﻿namespace FORMULARIOAPI.Models
 {
     public class User
     {

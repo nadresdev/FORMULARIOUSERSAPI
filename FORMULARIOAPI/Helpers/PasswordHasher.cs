@@ -1,6 +1,6 @@
 ﻿using System.Security.Cryptography;
 
-namespace AngularAuthYtAPI.Helpers
+namespace FORMULARIOAPI.Helpers
 {
     public class PasswordHasher
     {

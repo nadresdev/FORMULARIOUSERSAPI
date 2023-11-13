@@ -1,7 +1,7 @@
-﻿using AngularAuthYtAPI.Models;
+﻿using FORMULARIOAPI.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace AngularAuthYtAPI.Context
+namespace FORMULARIOAPI.Context
 {
     public class AppDbContext : DbContext
     {
