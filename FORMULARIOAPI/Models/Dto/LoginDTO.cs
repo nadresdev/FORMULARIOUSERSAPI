@@ -9,7 +9,7 @@
         public long? NroIdentificacion { get; set; }
         public string? TipoIdentificacion { get; set; }
 
-        private string? IdentificacionConcatenada { get; set; }
+        public string? IdentificacionConcatenada { get; set; }
 
         public string? NombresApellidos { get; set; }
         public string? Username { get; set; }

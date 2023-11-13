@@ -57,60 +57,35 @@ namespace FORMULARIOAPI.Controllers
                 RefreshToken = newRefreshToken
             });
         }
-/*
-        [HttpPost("registroB")]
-        public async Task<IActionResult> AddUser([FromBody] User userObj)
-        {
-            if (userObj == null)
-                return BadRequest();
 
-            
-            if (await CheckEmailExistAsync(userObj.Email))
-                return BadRequest(new { Message = "El Email ya existente" });
-
-           
-            if (await CheckUsernameExistAsync(userObj.Username))
-                return BadRequest(new { Message = "El Nombre de usuario ya existe" });
-
-            var passMessage = CheckPasswordStrength(userObj.Password);
-            if (!string.IsNullOrEmpty(passMessage))
-                return BadRequest(new { Message = passMessage.ToString() });
-
-            userObj.Password = PasswordHasher.HashPassword(userObj.Password);
-            userObj.Role = "User";
-            userObj.Token = "";
-            await _authContext.AddAsync(userObj);
-            await _authContext.SaveChangesAsync();
-            return Ok(new
-            {
-                Status = 200,
-                Message = "Usuario agregado!"
-            });
-        }
-*/
-        [HttpPost("registro")]
+        [HttpPost("registro")] // REGISTRA USUARIO Y PERSONAS
         public async Task<IActionResult> AddUserB([FromBody] LoginDTO userObj)
         {
+             DateTime hoy = DateTime.Now;
 
 
             Personas persona = new Personas();
             User user = new User();
             persona.Nombres = userObj.Nombre;
             persona.Email = userObj.Email;
-            user.Username = userObj.Username;  
-            user.Password = userObj.Password;
             persona.Role = userObj.Role;
-            user.Token = userObj.Token;
-            
-            persona.Apellidos= userObj.Apellidos;
-            user.RefreshToken = userObj.RefreshToken;
+            persona.Apellidos = userObj.Apellidos;
+            persona.FechaCreacion = hoy;
+            user.FechaCreacion = hoy;
             persona.NroIdentificacion = userObj.NroIdentificacion;
             persona.TipoIdentificacion = userObj.TipoIdentificacion;
             persona.NombresApellidos = userObj.Nombre + " " + userObj.Apellidos;
             persona.IdentificacionConcatenada = userObj.TipoIdentificacion + " " + userObj.NroIdentificacion;
 
+            user.Username = userObj.Username;  
+            user.Password = userObj.Password;
+
+            
+            user.Token = userObj.Token;
+            user.RefreshToken = userObj.RefreshToken;
+           
             if (userObj == null)
-                return BadRequest();
+                return BadRequest(new { Message = "No se recibió Usuario" });
 
 
             if (await CheckEmailExistAsync(userObj.Email))
@@ -125,7 +100,7 @@ namespace FORMULARIOAPI.Controllers
                 return BadRequest(new { Message = passMessage.ToString() });
 
             user.Password = PasswordHasher.HashPassword(user.Password);
-            persona.Role = "User";
+            persona.Role = "Admin";
             user.Token = "";
             await _authContext.AddAsync(user);
             await _authContext.SaveChangesAsync();
@@ -157,7 +132,7 @@ namespace FORMULARIOAPI.Controllers
             return sb.ToString();
         }
 
-        private string CreateJwt(User user)
+        private string CreateJwt(User user)// CREATE TOKEN
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes("muymuymuysecreta....yut");
@@ -214,16 +189,10 @@ namespace FORMULARIOAPI.Controllers
 
         }
 
-       /* [Authorize]
-        [HttpGet]
-        public async Task<ActionResult<User>> GetPersonas()
-        {
-            return Ok(await _authContext.Users.ToListAsync());
-        }
-       */
+       
         [Authorize]
         [HttpGet]
-        public async Task<ActionResult<Personas>> GetAllUsers ()
+        public async Task<ActionResult<Personas>> GetAllUsers ()// oBTIENE LISTA PERSONAS
         {
             return Ok(await _authContext.Personas.ToListAsync());
         }
