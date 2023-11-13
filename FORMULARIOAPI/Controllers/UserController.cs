@@ -58,7 +58,7 @@ namespace FORMULARIOAPI.Controllers
             });
         }
 
-        [HttpPost("registro")]
+        [HttpPost("registroB")]
         public async Task<IActionResult> AddUser([FromBody] User userObj)
         {
             if (userObj == null)
@@ -87,6 +87,48 @@ namespace FORMULARIOAPI.Controllers
                 Message = "Usuario agregado!"
             });
         }
+
+        [HttpPost("registro")]
+        public async Task<IActionResult> AddUserB([FromBody] LoginDTO userObj)
+        {
+
+            User user = new User();
+            user.Nombre = userObj.Nombre;
+            user.Email = userObj.Email;
+            user.Username = userObj.Username;  
+            user.Password = userObj.Password;
+            user.Role = userObj.Role;
+            user.Token = userObj.Token;
+            user.Apellidos= userObj.Apellidos;
+            user.RefreshToken = userObj.RefreshToken;
+            
+            if (userObj == null)
+                return BadRequest();
+
+
+            if (await CheckEmailExistAsync(userObj.Email))
+                return BadRequest(new { Message = "El Email ya existente" });
+
+
+            if (await CheckUsernameExistAsync(userObj.Username))
+                return BadRequest(new { Message = "El Nombre de usuario ya existe" });
+
+            var passMessage = CheckPasswordStrength(userObj.Password);
+            if (!string.IsNullOrEmpty(passMessage))
+                return BadRequest(new { Message = passMessage.ToString() });
+
+            user.Password = PasswordHasher.HashPassword(user.Password);
+            user.Role = "User";
+            user.Token = "";
+            await _authContext.AddAsync(user);
+            await _authContext.SaveChangesAsync();
+            return Ok(new
+            {
+                Status = 200,
+                Message = "Usuario agregado!"
+            });
+        }
+
 
         private Task<bool> CheckEmailExistAsync(string? email)
             => _authContext.Users.AnyAsync(x => x.Email == email);
