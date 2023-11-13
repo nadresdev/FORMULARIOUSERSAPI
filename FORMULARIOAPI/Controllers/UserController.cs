@@ -27,7 +27,7 @@ namespace FORMULARIOAPI.Controllers
             _authContext = context;
         }
 
-        [HttpPost("authenticate")]
+        [HttpPost("autenticacion")]
         public async Task<IActionResult> Authenticate([FromBody] User userObj)
         {
             if (userObj == null)
@@ -58,17 +58,17 @@ namespace FORMULARIOAPI.Controllers
             });
         }
 
-        [HttpPost("register")]
+        [HttpPost("registro")]
         public async Task<IActionResult> AddUser([FromBody] User userObj)
         {
             if (userObj == null)
                 return BadRequest();
 
-            // check email
+            
             if (await CheckEmailExistAsync(userObj.Email))
                 return BadRequest(new { Message = "El Email ya existente" });
 
-            //check username
+           
             if (await CheckUsernameExistAsync(userObj.Username))
                 return BadRequest(new { Message = "El Nombre de usuario ya existe" });
 
@@ -109,7 +109,7 @@ namespace FORMULARIOAPI.Controllers
         private string CreateJwt(User user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes("veryverysceret.....");
+            var key = Encoding.ASCII.GetBytes("muymuymuysecreta....yut");
             var identity = new ClaimsIdentity(new Claim[]
             {
                 new Claim(ClaimTypes.Role, user.Role),
@@ -144,7 +144,7 @@ namespace FORMULARIOAPI.Controllers
 
         private ClaimsPrincipal GetPrincipleFromExpiredToken(string token)
         {//
-            var key = Encoding.ASCII.GetBytes("veryverysceret.....");
+            var key = Encoding.ASCII.GetBytes("muymuymuysecreta....yut");
             var tokenValidationParameters = new TokenValidationParameters
             {
                 ValidateAudience = false,
@@ -170,7 +170,7 @@ namespace FORMULARIOAPI.Controllers
             return Ok(await _authContext.Users.ToListAsync());
         }
 
-        [HttpPost("refresh")]
+        [HttpPost("refrescar")]
         public async Task<IActionResult> Refresh([FromBody] TokenApiDto tokenApiDto)
         {
             if (tokenApiDto is null)
