@@ -58,7 +58,7 @@ namespace FORMULARIOAPI.Controllers
             });
         }
 
-        [HttpPost("registro")] // REGISTRA USUARIO Y PERSONAS
+        [HttpPost("registro")] 
         public async Task<IActionResult> AddUserB([FromBody] LoginDTO userObj)
         {
              DateTime hoy = DateTime.Now;
@@ -132,13 +132,13 @@ namespace FORMULARIOAPI.Controllers
             return sb.ToString();
         }
 
-        private string CreateJwt(User user)// CREATE TOKEN
+        private string CreateJwt(User user)
         {
             var jwtTokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes("muymuymuysecreta....yut");
             var identity = new ClaimsIdentity(new Claim[]
             {
-               // new Claim(ClaimTypes.Role, user.Role),
+           
                 new Claim(ClaimTypes.Name,$"{user.Username}")
             });
 
